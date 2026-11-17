@@ -22,8 +22,7 @@ PalletPacker/
 ├── tests/
 │   └── PalletPacker.Tests/
 │
-├── .config/
-│   └── dotnet-tools.json
+├── dotnet-tools.json
 │
 ├── .env.example
 ├── .gitignore
