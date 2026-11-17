@@ -375,7 +375,7 @@ Følgende skal være installeret:
 Klon repository'et og gå til projektmappen:
 
 ```powershell
-git clone <repository-url>
+git clone https://github.com/EAMV-School-Work/PalletPacker
 cd PalletPacker
 ```
 
