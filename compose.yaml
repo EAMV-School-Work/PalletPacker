@@ -2,7 +2,6 @@
 services:
   database:
     image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: palletpacker-db
     environment:
       ACCEPT_EULA: "Y"
       MSSQL_PID: "Developer"
@@ -17,7 +16,6 @@ services:
     build:
       context: .
       dockerfile: src/PalletPacker.Web/Dockerfile
-    container_name: palletpacker-web
     profiles:
       - full
     depends_on:

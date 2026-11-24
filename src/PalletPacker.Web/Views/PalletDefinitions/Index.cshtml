@@ -1,0 +1,115 @@
+@model PalletDefinitionIndexViewModel
+
+@{
+    ViewData["Title"] = "Palledefinitioner";
+}
+
+<div class="d-flex justify-content-between align-items-start mb-3">
+    <div>
+        <h1>Palledefinitioner</h1>
+        <p class="text-muted">
+            @(Model.ShowArchived
+                ? "Viser alle palledefinitioner, også arkiverede."
+                : "Viser kun palledefinitioner, der ikke er arkiverede.")
+        </p>
+    </div>
+
+    <a class="btn btn-primary" asp-action="Create">
+        Tilføj palledefinition
+    </a>
+</div>
+
+<div class="d-flex justify-content-end mb-3">
+    <form asp-action="Index" method="get" class="form-check">
+        <input type="checkbox"
+               class="form-check-input"
+               id="showArchived"
+               name="showArchived"
+               value="true"
+               checked="@Model.ShowArchived"
+               onchange="this.form.submit()" />
+        <label class="form-check-label" for="showArchived">
+            Vis arkiverede
+        </label>
+    </form>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th>Navn</th>
+                <th>Mål (L × B × H)</th>
+                <th>Egenvægt</th>
+                <th>Maks. vægt</th>
+                <th>Maks. højde</th>
+                <th>Driftsstatus</th>
+                <th>Arkivstatus</th>
+                <th>Handlinger</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Definitions.Count == 0)
+            {
+                <tr>
+                    <td colspan="8" class="text-muted">
+                        Der er ingen palledefinitioner, der matcher visningen.
+                    </td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var item in Model.Definitions)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.LengthMm × @item.WidthMm × @item.HeightMm mm</td>
+                        <td>@item.OwnWeightKg kg</td>
+                        <td>@item.MaxWeightKg kg</td>
+                        <td>@item.MaxHeightMm mm</td>
+                        <td>@(item.IsActive ? "Aktiv" : "Inaktiv")</td>
+                        <td>@(item.IsArchived ? "Arkiveret" : "Ikke arkiveret")</td>
+                        <td>
+                            <div class="d-flex gap-1">
+                                @if (!item.IsArchived)
+                                {
+                                    <a asp-action="Edit"
+                                       asp-route-id="@item.Id"
+                                       class="btn btn-outline-secondary btn-sm">
+                                        Rediger
+                                    </a>
+
+                                    <form asp-action="Archive"
+                                          asp-route-id="@item.Id"
+                                          method="post">
+                                        <input type="hidden"
+                                               name="showArchived"
+                                               value="@Model.ShowArchived" />
+                                        <button type="submit"
+                                                class="btn btn-outline-danger btn-sm">
+                                            Arkivér
+                                        </button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <form asp-action="Unarchive"
+                                          asp-route-id="@item.Id"
+                                          method="post">
+                                        <input type="hidden"
+                                               name="showArchived"
+                                               value="@Model.ShowArchived" />
+                                        <button type="submit"
+                                                class="btn btn-outline-secondary btn-sm">
+                                            Fjern fra arkiv
+                                        </button>
+                                    </form>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

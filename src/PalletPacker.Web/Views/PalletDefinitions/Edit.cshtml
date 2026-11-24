@@ -1,0 +1,74 @@
+@model PalletDefinitionFormViewModel
+
+@{
+    ViewData["Title"] = "Rediger palledefinition";
+}
+
+<h1>Rediger palledefinition</h1>
+<p class="text-muted">
+    Formularen viser den valgte definitions værdier. Rediger palledefinitionens oplysninger.
+</p>
+
+<form asp-action="Edit"
+    asp-route-id="@Model.Id"
+    method="post">
+    <div asp-validation-summary="All" class="text-danger mb-3"></div>
+    <input asp-for="Id" type="hidden" />
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Navn</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="PalletType" class="form-label">Palletype</label>
+        <input asp-for="PalletType" class="form-control" />
+        <span asp-validation-for="PalletType" class="text-danger"></span>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <label asp-for="LengthMm" class="form-label">Længde (mm)</label>
+            <input asp-for="LengthMm" type="number" min="1" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-3">
+            <label asp-for="WidthMm" class="form-label">Bredde (mm)</label>
+            <input asp-for="WidthMm" type="number" min="1" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-3">
+            <label asp-for="HeightMm" class="form-label">Højde (mm)</label>
+            <input asp-for="HeightMm" type="number" min="1" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <label asp-for="OwnWeightKg" class="form-label">Egenvægt (kg)</label>
+            <input asp-for="OwnWeightKg" type="number" min="0" step="0.01" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-3">
+            <label asp-for="MaxWeightKg" class="form-label">Maks. vægt (kg)</label>
+            <input asp-for="MaxWeightKg" type="number" min="0.01" step="0.01" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-3">
+            <label asp-for="MaxHeightMm" class="form-label">Maks. højde (mm)</label>
+            <input asp-for="MaxHeightMm" type="number" min="1" class="form-control" />
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="AllowedOverhangMm" class="form-label">Tilladt overmål (mm)</label>
+        <input asp-for="AllowedOverhangMm" type="number" min="0" class="form-control" />
+    </div>
+
+    <div class="form-check mb-3">
+        <input asp-for="IsActive" class="form-check-input" />
+        <label asp-for="IsActive" class="form-check-label">
+            Aktiv (må bruges til optimering)
+        </label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Gem ændringer</button>
+    <a asp-action="Index" class="btn btn-outline-secondary">Annuller</a>
+</form>
