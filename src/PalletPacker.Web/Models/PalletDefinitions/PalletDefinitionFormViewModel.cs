@@ -22,10 +22,12 @@ public class PalletDefinitionFormViewModel
     public int HeightMm { get; set; }
 
     [Range(typeof(decimal), "0", "99999999.99",
+        ParseLimitsInInvariantCulture = true,
         ErrorMessage = "Egenvægten skal være mellem 0 og 99.999.999,99 kg.")]
     public decimal OwnWeightKg { get; set; }
 
     [Range(typeof(decimal), "0.01", "99999999.99",
+        ParseLimitsInInvariantCulture = true,
         ErrorMessage = "Maksimal vægt skal være større end 0 kg.")]
     public decimal MaxWeightKg { get; set; }
 
