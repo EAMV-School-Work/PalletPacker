@@ -21,6 +21,58 @@ namespace PalletPacker.Infrastructure.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("PalletPacker.Core.Entities.Element", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("CanRotate")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("HeightMm")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LengthMm")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MaxOtherElementsOnPallet")
+                        .HasColumnType("int");
+
+                    b.Property<string>("OrderId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("PalletType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Series")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("WeightKg")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<int>("WidthMm")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("Elements");
+                });
+
+            modelBuilder.Entity("PalletPacker.Core.Entities.Order", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Orders");
+                });
+
             modelBuilder.Entity("PalletPacker.Core.Entities.PalletDefinition", b =>
                 {
                     b.Property<int>("Id")
@@ -69,6 +121,18 @@ namespace PalletPacker.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PalletDefinitions");
+                });
+
+            modelBuilder.Entity("PalletPacker.Core.Entities.Element", b =>
+                {
+                    b.HasOne("PalletPacker.Core.Entities.Order", null)
+                        .WithMany("Elements")
+                        .HasForeignKey("OrderId");
+                });
+
+            modelBuilder.Entity("PalletPacker.Core.Entities.Order", b =>
+                {
+                    b.Navigation("Elements");
                 });
 #pragma warning restore 612, 618
         }

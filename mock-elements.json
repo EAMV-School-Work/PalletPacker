@@ -1,0 +1,24 @@
+[
+  {
+    "id": "element-001",
+    "weightKg": 12.5,
+    "heightMm": 1200,
+    "lengthMm": 800,
+    "widthMm": 40,
+    "series": "serie-a",
+    "palletType": "Almindelig",
+    "canRotate": true,
+    "maxOtherElementsOnPallet": 2
+  },
+  {
+    "id": "element-002",
+    "weightKg": 14.0,
+    "heightMm": 1200,
+    "lengthMm": 800,
+    "widthMm": 40,
+    "series": "serie-a",
+    "palletType": "Almindelig",
+    "canRotate": true,
+    "maxOtherElementsOnPallet": 2
+  }
+]

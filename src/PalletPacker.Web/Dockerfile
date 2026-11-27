@@ -10,6 +10,7 @@ COPY src/PalletPacker.Web/*.csproj src/PalletPacker.Web/
 RUN dotnet restore src/PalletPacker.Web/PalletPacker.Web.csproj
 
 COPY src/ src/
+COPY mock-elements.json mock-orders.json ./
 
 RUN dotnet publish src/PalletPacker.Web/PalletPacker.Web.csproj \
     -c Release -o /app/publish --no-restore

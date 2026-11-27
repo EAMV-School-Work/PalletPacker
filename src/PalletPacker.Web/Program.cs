@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PalletPacker.Infrastructure.Data;
+using PalletPacker.Infrastructure.Imports;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
     options.UseSqlServer(connectionString);
 });
+
+// Add mock data loader and synchronizer services
+builder.Services.AddSingleton<MockDataJsonLoader>();
+builder.Services.AddScoped<MockDataSynchronizer>();
 
 var app = builder.Build();
 
@@ -47,6 +52,20 @@ using (var scope = app.Services.CreateScope())
             await Task.Delay(delay);
         }
     }
+}
+
+// Synchronize mock data
+using (var scope = app.Services.CreateScope())
+{
+    var synchronizer = scope.ServiceProvider
+        .GetRequiredService<MockDataSynchronizer>();
+
+    var wasUpdated = await synchronizer.SynchronizeAsync();
+
+    app.Logger.LogInformation(
+        wasUpdated
+            ? "Order and element data were synchronized from JSON files."
+            : "Order and element data already match JSON files.");
 }
 
 // Configure the HTTP request pipeline.
